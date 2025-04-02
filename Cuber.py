@@ -3,6 +3,7 @@ import sys
 import json
 
 def main():
+    #TO WRITE start *************************************************************************
     # Establish connection to RabbitMQ server
     connection = pika.BlockingConnection(pika.ConnectionParameters('localhost'))
     channel = connection.channel()
@@ -50,10 +51,11 @@ def main():
     
     print(' [*] Waiting for numbers to cube. To exit press CTRL+C')
     channel.start_consuming()
+    #TO WRITE finish *************************************************************************
 
 if __name__ == '__main__':
     try:
         main()
     except KeyboardInterrupt:
-        print(' [x] Squarer stopped')
+        print(' [x] Cuber stopped')
         sys.exit(0)

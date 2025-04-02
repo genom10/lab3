@@ -25,7 +25,12 @@ def log_message(body):
         f.write(log_entry)
     print(log_entry.strip())
 
-def main():
+def number_callback(ch, method, properties, body):
+    log_message(body)
+    ch.basic_ack(delivery_tag=method.delivery_tag)
+
+def main(): 
+    #TO WRITE start *************************************************************************
     setup_logging()
     
     connection = pika.BlockingConnection(pika.ConnectionParameters('localhost'))
@@ -40,16 +45,12 @@ def main():
     # Regular queue for squared numbers
     channel.queue_declare(queue='processed_queue', durable=True)
     
-    def number_callback(ch, method, properties, body):
-        log_message(body)
-        ch.basic_ack(delivery_tag=method.delivery_tag)
-    
-    
     channel.basic_consume(queue=num_queue, on_message_callback=number_callback)
     channel.basic_consume(queue='processed_queue', on_message_callback=number_callback)
     
     print(' [*] Logger started. Waiting for messages. To exit press CTRL+C')
     channel.start_consuming()
+    #TO WRITE finish *************************************************************************
 
 if __name__ == '__main__':
     try:

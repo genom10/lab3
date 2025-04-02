@@ -9,12 +9,9 @@ def publish(publisher_name:str, max_number: int, delay: float):
     connection = pika.BlockingConnection(pika.ConnectionParameters('localhost'))
     channel = connection.channel()
     
-    # Declare a queue (will create if doesn't exist)
-    # queue_name = 'number_source'
-    # channel.queue_declare(queue=queue_name, durable=True)
-    
     # Publish numbers from 0 to max_number with delay
     for number in range(0, max_number + 1):
+        #TO WRITE start *************************************************************************
         message = json.dumps({'sender':publisher_name, 'number':number})
         channel.exchange_declare(exchange='numbers', exchange_type='fanout')
         channel.basic_publish(
@@ -25,6 +22,7 @@ def publish(publisher_name:str, max_number: int, delay: float):
                 delivery_mode=2,  # make message persistent
             ))
         print(f" Sent {message}")
+        #TO WRITE finish *************************************************************************
         time.sleep(delay)
     
     connection.close()
