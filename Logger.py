@@ -30,8 +30,8 @@ def number_callback(ch, method, properties, body):
     ch.basic_ack(delivery_tag=method.delivery_tag)
 
 def main(): 
-    #TO WRITE start *************************************************************************
     setup_logging()
+    #TO WRITE start *************************************************************************
     
     connection = pika.BlockingConnection(pika.ConnectionParameters('localhost'))
     channel = connection.channel()
